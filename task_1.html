@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Different Courses in Engineering</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f9d976, #a1c4fd); /* orange-blue gradient */
+      background-attachment: fixed;
+      color: #000000;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Bubble effect */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.3) 20%, transparent 20%), 
+                        radial-gradient(circle, rgba(255,255,255,0.2) 20%, transparent 20%);
+      background-size: 100px 100px;
+      background-position: 0 0, 50px 50px;
+      z-index: 0;
+    }
+
+    h1 {
+      color: #000000;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .course {
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 800px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      text-align: left;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cse { background-color: #fff3cd; }
+    .mech { background-color: #d1f7ff; }
+    .eee { background-color: #e2f7d1; }
+    .civil { background-color: #ffdce0; }
+
+    button, a.explore {
+      margin: 10px 10px 10px 0;
+      padding: 10px 15px;
+      font-size: 14px;
+      background: linear-gradient(135deg, #ff6ec4, #7873f5); /* Fancy gradient */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      transition: 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+
+    button:hover, a.explore:hover {
+      background: linear-gradient(135deg, #43e97b, #38f9d7);
+    }
+
+    .info {
+      display: none;
+      margin-top: 10px;
+      color: #000;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Different Courses in Engineering</h1>
+
+  <div class="course cse">
+    <h2>Computer Science Engineering</h2>
+    <p>Focuses on programming, data, AI, and computer systems.</p>
+    <button onclick="toggleInfo('cse-adv')">Advantages</button>
+    <button onclick="toggleInfo('cse-dis')">Disadvantages</button>
+    <a class="explore" href="https://www.naukri.com/computer-science-jobs" target="_blank">Explore Job Fields</a>
+    <div id="cse-adv" class="info">
+      <ul>
+        <li>High industry demand</li>
+        <li>Remote work flexibility</li>
+        <li>High salary potential</li>
+      </ul>
+    </div>
+    <div id="cse-dis" class="info">
+      <ul>
+        <li>Intense competition</li>
+        <li>Constant skill upgrades needed</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="course mech">
+    <h2>Mechanical Engineering</h2>
+    <p>Focuses on machines, manufacturing, thermodynamics, and design.</p>
+    <button onclick="toggleInfo('mech-adv')">Advantages</button>
+    <button onclick="toggleInfo('mech-dis')">Disadvantages</button>
+    <a class="explore" href="https://www.indeed.com/q-mechanical-engineering-jobs.html" target="_blank">Explore Job Fields</a>
+    <div id="mech-adv" class="info">
+      <ul>
+        <li>Wide career options</li>
+        <li>Strong foundational skills</li>
+      </ul>
+    </div>
+    <div id="mech-dis" class="info">
+      <ul>
+        <li>Physically demanding</li>
+        <li>May need postgrad specialization</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="course eee">
+    <h2>Electrical Engineering</h2>
+    <p>Focuses on electronics, electromagnetism, and power systems.</p>
+    <button onclick="toggleInfo('eee-adv')">Advantages</button>
+    <button onclick="toggleInfo('eee-dis')">Disadvantages</button>
+    <a class="explore" href="https://www.glassdoor.com/Job/electrical-engineering-jobs-SRCH_KO0,24.htm" target="_blank">Explore Job Fields</a>
+    <div id="eee-adv" class="info">
+      <ul>
+        <li>Core technology field</li>
+        <li>Public and private sector opportunities</li>
+      </ul>
+    </div>
+    <div id="eee-dis" class="info">
+      <ul>
+        <li>Risk in field jobs</li>
+        <li>Math-heavy subjects</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="course civil">
+    <h2>Civil Engineering</h2>
+    <p>Deals with infrastructure: roads, bridges, dams, and buildings.</p>
+    <button onclick="toggleInfo('civil-adv')">Advantages</button>
+    <button onclick="toggleInfo('civil-dis')">Disadvantages</button>
+    <a class="explore" href="https://www.linkedin.com/jobs/civil-engineering-jobs" target="_blank">Explore Job Fields</a>
+    <div id="civil-adv" class="info">
+      <ul>
+        <li>Vital for development</li>
+        <li>Global demand</li>
+      </ul>
+    </div>
+    <div id="civil-dis" class="info">
+      <ul>
+        <li>Outdoor/field conditions</li>
+        <li>Fewer remote jobs</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function toggleInfo(id) {
+      const el = document.getElementById(id);
+      const siblings = el.parentElement.querySelectorAll('.info');
+      siblings.forEach(info => {
+        if (info.id === id) {
+          info.style.display = (info.style.display === 'block') ? 'none' : 'block';
+        } else {
+          info.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
