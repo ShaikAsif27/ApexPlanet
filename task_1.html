@@ -13,13 +13,13 @@
       padding: 20px;
       text-align: center;
       position: relative;
-      overflow: hidden;
+      margin: 0;
     }
 
     /* Bubble effect */
     body::before {
       content: '';
-      position: absolute;
+      position: fixed; /* fixed so it doesn't scroll with content */
       top: 0;
       left: 0;
       width: 100%;
@@ -29,6 +29,7 @@
       background-size: 100px 100px;
       background-position: 0 0, 50px 50px;
       z-index: 0;
+      pointer-events: none; /* allow clicks to pass through */
     }
 
     h1 {
@@ -48,12 +49,14 @@
       text-align: left;
       position: relative;
       z-index: 1;
+      background-color: rgba(255,255,255,0.85); /* semi-transparent white */
+      backdrop-filter: blur(5px);
     }
 
-    .cse { background-color: #fff3cd; }
-    .mech { background-color: #d1f7ff; }
-    .eee { background-color: #e2f7d1; }
-    .civil { background-color: #ffdce0; }
+    .cse { background-color: rgba(255, 243, 205, 0.85); }
+    .mech { background-color: rgba(209, 247, 255, 0.85); }
+    .eee { background-color: rgba(226, 247, 209, 0.85); }
+    .civil { background-color: rgba(255, 220, 224, 0.85); }
 
     button, a.explore {
       margin: 10px 10px 10px 0;
@@ -79,10 +82,13 @@
       display: none;
       margin-top: 10px;
       color: #000;
+      position: relative;
+      z-index: 1;
     }
 
     ul {
       padding-left: 20px;
+      margin-top: 5px;
     }
   </style>
 </head>
@@ -92,8 +98,8 @@
   <div class="course cse">
     <h2>Computer Science Engineering</h2>
     <p>Focuses on programming, data, AI, and computer systems.</p>
-    <button onclick="toggleInfo('cse-adv')">Advantages</button>
-    <button onclick="toggleInfo('cse-dis')">Disadvantages</button>
+    <button onclick="toggleInfo('cse-adv', this)">Advantages</button>
+    <button onclick="toggleInfo('cse-dis', this)">Disadvantages</button>
     <a class="explore" href="https://www.naukri.com/computer-science-jobs" target="_blank">Explore Job Fields</a>
     <div id="cse-adv" class="info">
       <ul>
@@ -113,8 +119,8 @@
   <div class="course mech">
     <h2>Mechanical Engineering</h2>
     <p>Focuses on machines, manufacturing, thermodynamics, and design.</p>
-    <button onclick="toggleInfo('mech-adv')">Advantages</button>
-    <button onclick="toggleInfo('mech-dis')">Disadvantages</button>
+    <button onclick="toggleInfo('mech-adv', this)">Advantages</button>
+    <button onclick="toggleInfo('mech-dis', this)">Disadvantages</button>
     <a class="explore" href="https://www.indeed.com/q-mechanical-engineering-jobs.html" target="_blank">Explore Job Fields</a>
     <div id="mech-adv" class="info">
       <ul>
@@ -133,8 +139,8 @@
   <div class="course eee">
     <h2>Electrical Engineering</h2>
     <p>Focuses on electronics, electromagnetism, and power systems.</p>
-    <button onclick="toggleInfo('eee-adv')">Advantages</button>
-    <button onclick="toggleInfo('eee-dis')">Disadvantages</button>
+    <button onclick="toggleInfo('eee-adv', this)">Advantages</button>
+    <button onclick="toggleInfo('eee-dis', this)">Disadvantages</button>
     <a class="explore" href="https://www.glassdoor.com/Job/electrical-engineering-jobs-SRCH_KO0,24.htm" target="_blank">Explore Job Fields</a>
     <div id="eee-adv" class="info">
       <ul>
@@ -153,8 +159,8 @@
   <div class="course civil">
     <h2>Civil Engineering</h2>
     <p>Deals with infrastructure: roads, bridges, dams, and buildings.</p>
-    <button onclick="toggleInfo('civil-adv')">Advantages</button>
-    <button onclick="toggleInfo('civil-dis')">Disadvantages</button>
+    <button onclick="toggleInfo('civil-adv', this)">Advantages</button>
+    <button onclick="toggleInfo('civil-dis', this)">Disadvantages</button>
     <a class="explore" href="https://www.linkedin.com/jobs/civil-engineering-jobs" target="_blank">Explore Job Fields</a>
     <div id="civil-adv" class="info">
       <ul>
@@ -171,10 +177,10 @@
   </div>
 
   <script>
-    function toggleInfo(id) {
-      const el = document.getElementById(id);
-      const siblings = el.parentElement.querySelectorAll('.info');
-      siblings.forEach(info => {
+    function toggleInfo(id, btn) {
+      const container = btn.closest('.course');
+      const infos = container.querySelectorAll('.info');
+      infos.forEach(info => {
         if (info.id === id) {
           info.style.display = (info.style.display === 'block') ? 'none' : 'block';
         } else {
