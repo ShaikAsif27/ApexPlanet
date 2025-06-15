@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Development Mini Project</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #e1bee7);
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: #4a148c;
+    }
+
+    form, .todo, .gallery {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+
+    label, input, button, textarea {
+      display: block;
+      margin: 10px 0;
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #7b1fa2;
+      color: white;
+      cursor: pointer;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .task-list, .image-gallery {
+      margin-top: 10px;
+    }
+
+    .task-item, .image-item {
+      background-color: #f3e5f5;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    .image-item img {
+      max-width: 100%;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Web Development Mini Project</h1>
+
+  <!-- Contact Form -->
+  <form id="contactForm">
+    <h2>Contact Form</h2>
+    <label for="name">Name:</label>
+    <input type="text" id="name" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+
+    <label for="message">Message:</label>
+    <textarea id="message" rows="4" required></textarea>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <!-- Responsive Grid Layout -->
+  <div class="grid">
+    <div style="background:#ce93d8; padding:20px; border-radius:10px;">Navigation Area</div>
+    <div style="background:#ba68c8; padding:20px; border-radius:10px;">Main Content Area</div>
+  </div>
+
+  <!-- Dynamic To-Do List -->
+  <div class="todo">
+    <h2>To-Do List</h2>
+    <input type="text" id="taskInput" placeholder="Enter a task">
+    <button onclick="addTask()">Add Task</button>
+    <div class="task-list" id="taskList"></div>
+  </div>
+
+  <!-- Dynamic Image Gallery -->
+  <div class="gallery">
+    <h2>Image Gallery</h2>
+    <input type="file" id="imgFile" accept="image/*">
+    <button onclick="uploadImage()">Upload Image</button>
+    <div class="image-gallery" id="imageGallery"></div>
+  </div>
+
+  <script>
+    // Form Validation
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      const email = document.getElementById('email');
+      const name = document.getElementById('name');
+      const message = document.getElementById('message');
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+      if (!emailPattern.test(email.value)) {
+        alert('Enter a valid email address.');
+        e.preventDefault();
+      } else if (!name.value || !message.value) {
+        alert('All fields are required.');
+        e.preventDefault();
+      }
+    });
+
+    // To-Do List
+    function addTask() {
+      const task = document.getElementById('taskInput').value;
+      if (task) {
+        const div = document.createElement('div');
+        div.className = 'task-item';
+        div.innerText = task;
+        div.onclick = () => div.remove();
+        document.getElementById('taskList').appendChild(div);
+        document.getElementById('taskInput').value = '';
+      }
+    }
+
+    // Image Gallery from File Upload
+    function uploadImage() {
+      const fileInput = document.getElementById('imgFile');
+      const file = fileInput.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.alt = 'Uploaded Image';
+
+          const div = document.createElement('div');
+          div.className = 'image-item';
+          div.appendChild(img);
+          div.onclick = () => div.remove();
+          document.getElementById('imageGallery').appendChild(div);
+        };
+        reader.readAsDataURL(file);
+        fileInput.value = '';
+      } else {
+        alert('Please select a valid image file.');
+      }
+    }
+  </script>
+</body>
+
+</html>
